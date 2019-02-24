@@ -40,14 +40,22 @@
 //	详细：此条命令无需修改
 
 	接下来
-	本地资源上传到github服务器
+	本地资源上传到github服务器   说明：【项目可以添加自述文件-Readme.md】
 	1.在github上new一个新的仓库
 //	详细:github提供四种填充版本库的的方法,1.客户端可视化界面的方法2.通过命令行方式创建3.通过import（在另一个版本库导入）4.通过命令行推送一个已经存在的版本库
 
-	2.将本地仓库推送到github远程仓库 --> 采用第四种方法   注意:github上要是ssh形式不是https
+	2.将本地仓库和github远程仓库建立连接 --> 采用第四种方法   注意:github上要是ssh形式不是https
 	详细:复制两段代码至命令行
 	git remote add origin git@github.com:WhaleJS/hqdemo1.git
 	git push -u origin master
 	
+	3.git push --> 将本地的代码资源推送到远程仓库
 	
+	
+	git实际开发工作流程
+	第一步：git clone 需要克隆仓库的URL ,克隆远程仓库  ,在一个新的文件夹内 打开git命令窗 使用git clone
+	第二步: 工作内容
+	第三步：git add .
+	第四步：git commit -m ''
+	第五步：git push
 	
