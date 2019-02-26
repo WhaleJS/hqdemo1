@@ -63,3 +63,24 @@
 	git上面源码转化为页面效果
 	http://htmlpreview.github.com/?(固体格式) + https://github.com/WhaleJS/hqdemo1/blob/master/index.html(github上的文件代码地址)
 	
+
+//	SVN版本控制系统
+	repository --版本库(源代码库)
+	Checkout --检出(下载)
+	Commit --提交(上传)
+	Update --更新
+	
+	步骤:
+	服务端
+	1.打开SVN视图管理器 --> user --> create user(创建一个用户) Yan 123(用户名-密码)
+	2.可选-->(Groups)分组,可以把不同的人员分类到不同的组以用于同一模板工作.---创建组名后,add添加成员
+	3.创建代码仓库 Create new Repository
+	4.TortoiseSVN --> import (将项目导入到SVN版本库)
+	---------------------------------------------------------
+	客户端
+	1.新建项目文件夹 --> 在SVN上面检出服务器端项目.一般是检出最新 
+	2.在文件中进行代码编写
+	3.若果文件出现红色感叹号,说明文件被修改了还未被上传
+	4.内容完成,把文件上传到SVN服务器-->commit(提交时,可以附注备注信息),此时版本号也随着更改
+	5.Update更新内容
+	6.若commit时出现了报错(此时自己的项目出现几个不同版本的文件),可以点击弹窗的show log日志查看详情 --> Mine代表自己的文件  Merged代表合并后的文件   点击save保存
