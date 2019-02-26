@@ -84,3 +84,24 @@
 	4.内容完成,把文件上传到SVN服务器-->commit(提交时,可以附注备注信息),此时版本号也随着更改
 	5.Update更新内容
 	6.若commit时出现了报错(此时自己的项目出现几个不同版本的文件),可以点击弹窗的show log日志查看详情 --> Mine代表自己的文件  Merged代表合并后的文件   点击save保存
+	
+	
+============================================================================================================================================
+
+
+	[Node.js相关API]
+	
+	模块暴露--遵循common.Js规范
+	ES5:(module.exports) --> 暴露  (require) --> 接收   ES6: (export) --> 暴露  (import) --> 接收
+	
+	1.supervisor --> 自动监视文件修改,重复启动服务-无需像node server一样一直手动重启
+//	   详细:npm i supervisor -g
+	
+	2.npm init -y --> 生成package.json文件 package.json是(项目的配置信息)
+//    详细: npm start(也可以是npm run start) 其实执行的就是package,json里面的'script'对象属性里面的'start'属性的值
+	
+	node--路由
+//	详细:根据用户请求的参数传回或跳转到相应的页面(url),说白了就是路径
+	
+	附注:Buffer --> 缓冲区(储存一些数据)
+	第三方库:cheerio(用于服务器端处理字符串,和 jQuery(DOM)是类似的.不过cheerio是基于string处理方式,node.js里面没有DOM)
