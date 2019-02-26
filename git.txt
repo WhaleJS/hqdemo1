@@ -59,3 +59,7 @@
 	第四步：git commit -m ''
 	第五步：git push
 	
+	//
+	git上面源码转化为页面效果
+	http://htmlpreview.github.com/?(固体格式) + https://github.com/WhaleJS/hqdemo1/blob/master/index.html(github上的文件代码地址)
+	
