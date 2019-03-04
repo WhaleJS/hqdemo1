@@ -88,8 +88,14 @@
 	
 ============================================================================================================================================
 
+	Node.js
+	
+	
+//	说明
+	安装Node的时候就已经把npm安装了,通过npm init安装node_modules  npm相当于菜市场,node_modules相当于菜篮,里面放的全是菜(例如各种js和插件模块),在项目里面通过npm i --save 插件名
+	去安装需要用到的插件模块  然后定义变量 --> require导入这个模块即可使用
 
-	[Node.js相关API]
+	[Node.js相关API]  Node环境下没有window对象  只是global对象 如同小程序
 	
 	模块暴露--遵循common.Js规范
 	ES5:(module.exports) --> 暴露  (require) --> 接收   ES6: (export) --> 暴露  (import) --> 接收
@@ -105,3 +111,165 @@
 	
 	附注:Buffer --> 缓冲区(储存一些数据)
 	第三方库:cheerio(用于服务器端处理字符串,和 jQuery(DOM)是类似的.不过cheerio是基于string处理方式,node.js里面没有DOM)
+	
+	
+	
+	Express
+	
+	
+//	重点 Node(express) + mongoDB + mongoose搭建简易后台
+	Node.js的express脚手架 --> 用于快速搭建web应用
+	express(基于Node.js的web开发框架 --> 相当于js和jquery的关系)
+	1.npm i --save express --> 配置express环境
+	
+	2.配置静态资源路径
+	调用use()方法  app.use(express.static('指定的文件夹'))  app是express的一个实例
+	
+	3.post && get 请求参数处理
+		get:req.query.xxx
+		post:默认情况下,express不会处理post请求的参数,需要增加额外的插件来处理 body-parser npm i --save body-parser  (后台在post请求里面用req.body即可查看前台返回的数据)
+		app.use(bodyparser.urlencoded({extended:true})) --> 处理form表单格式提交的数据
+		app.use(bodyparser.json())-->处理json格式的数据
+		
+	4.在浏览器输出chrome://flags/#enable-devtools-experiments, 并改为启用   --> 在项目中输入 node --inspect 项目名,接下来在浏览器中就出现了Node.js的debug调试工具,此工具和自动重启工具supervisor会启冲突,只能用一个	 
+	
+	5.通过mongoose连接数据库   npm i --save mongoose@4 @4(表示版本)	  mongoose(mongoDB的第三方库) mongoose封装了mongoDB数据库的所有操作方法
+	a.schema-->数据库的映射(相当于镜像)  不具备数据库操作能力
+	
+	
+	
+	
+	MongoDB
+	
+	==================================================================
+	
+	关系型数据库  mysql  oracel (表与表之间有严格的关系)比如学生名字和ID为一表  ID和成绩为一表 两张表就建立了关系  [.较为复杂  .不可拆分]
+	非关系型数据库 Mongo  CouchDB 类似json格式的数据,储存内容是文档性.其目的为web应用提供高性能的数据接口  优点:[.可拆分 .可扩展 .无复杂关系] 缺点:没有标准化
+	
+	MongoDB --> 数据结构由有键值对组成  key => value,其数据是存在一个文档中(类json)
+	表格(Mysq) --> 集合(Mong)  行(Mysq) --> 文档(Mong)  列(Mysq)  --> 字段(Mong)  表联合(Mysq)  --> 嵌套文档(Mong)
+	
+	MongoDB安装与配置!
+	MongoDB 安装目录 --> C:\Program Files\MongoDB\Server\3.4\
+	
+	
+	配置项 (端口也可配置)
+	1.找一个盘符 创建一个文件夹(data)
+	2.在data里面放三个文件 db(用于存放数据库) conf dbConf
+	3.在conf里面创建一个mongo.conf文件,并将mongo.conf在编辑器内做修改.第一设置dbpath:xxx路径(表示数据库存放位置) 第二:设置logpath:xxx路径(表示日志的路径)
+	4.在dbConf里面创建mongodb.log文件(也就是日志文件)
+	
+	5.在数据库安装目录下 找到bin目录(mongodb的配置和命令信息)  创建一个 start.bat文件-->.bat是命令文件
+	6.修改start.bat文件 输入mongod -f(此命令会运行mongo.exe数据程序) -f是指定了运行文件的路径
+	7.start.bat命令启动后小化窗口 --> 点击mongo.exe运行数据库
+	
+	-------------------------------------------------------------------
+	
+	[mongoDB命令]-->注意:books可随意命名,这是集合名
+	
+	1.show dbs --> 查看有多少数据库
+	
+	2.use  数据库名字  --> 新建数据库 如果检查到有的话就切换(switch表示切换+ed表示切换成功),没有的话就是创建.
+//	附注:创建完后,使用show dbs查询,发现没有显示此数据库,原因是数据库没有数据.
+	
+	
+	3.插入数据 --> db.books.insert({name:'小王',address:'成都'})  books表示集合名亦为一条数据
+	
+	4.查询数据 --> db.books.find(可以传参数) 
+	
+	5.修改/更新数据 --> db.books.update({name:"小红"},{$set:{name:"小明"}})  第一个参数为查询对象 || 第二个则为修改对象 $set的意思是如果有这个属性就修改,没有则添加 
+	详细:数据库命令行提示:nMatched:1-->表示匹配到一个  nUpserted:0 --> 表示是否是新增的  nModified:1 --> 表示更新成功
+	
+	6.删除数据 --> db.books.remove({},1/true)第一个参数也是查询对象,就是删除谁的意思 ,不传第二个参数,则会删除所有相关的数据|| 第二个参数表示删除第一个
+	
+	7.删除数据库 --> db.dropDatabase()
+	
+	8.删除集合名称 --> db.集合名字.drop() --> 返回true
+	
+	9.查看当前数据库有哪些集合	--> show collections
+	
+	10.复杂查询示例
+	 a.条件查询 db.books.find({name:"北京"}) 
+	 b.条件查询 大于 $gt  小于$lt  大于等于$gte  小于等于lgte 
+	 示例 --> db.books.find({age:{$gt:18}})
+	 c.双重筛选(比如我根据条件筛选出5条,我只想要2两条) --> db.books.find({age:{$gt:18}}).limit(2) 跟上.limit(参数为想要返回多少条数)
+	 D.跳过上一次查询完的数据 --> skip(参数可选跳过多少条)方法 db.books.find({age:{$gt:18}}).skip(1).limit(2)  --> 可做分页功能
+	 
+	 排序
+	 db.books.find().sort({age:-1}) 1:升序  -1:降序
+	 
+	 索引
+	 ensureIndex({index:1}) 修改数据相对应的id 通常mongoDB已经自动为数据添加id
+	 
+	 
+	Websocket 
+	
+	==============================================================
+	websocket
+	概念:websocket是HTML5新增的协议  
+	1.基于TCP协议(两者建立连接,且一直连接,除非一方主动断开)
+	2.由通信协议和编程API组成.
+	3.在浏览器和服务器之间建立双向连接 实现双向通信
+	4.基于事件的方式(监听)
+	附注:双向通信-->意味着websokect不像http请求那样单方面的req-->res请求响应,而是客户端和服务端可以同时发送并相应请求
+	
+//	先导入ws模块(npm i --save ws) ws启动的是websocket服务  var websocket = require('ws')
+	socket--API
+	1.前台 var ws = new WebScoket('ws://127.0.0.1:端口')
+	2.API 
+	a.open -- Socket,onopen 连接时触发
+	b.message -- Socket.onmessage 客户端接收服务端数据时触发
+	c.error -- Scoketonerror 通信错误时触发
+	d.close -- Socketonclose 连接关闭时候触发
+	
+	方法:Socket.send()-使用连接发送数据 Socket.close() 关闭连接
+	
+//	socket第三方库
+	socket.io.js//-客户端和服务端都可以用  socket.io相当于js和jq  优点:比如要使用websocket给所有人发信息,原生的socket办不到,只能用socket.io
+	用法:
+	1.安装socket.io:npm i --save socket.io  安装以后,会在项目里面注入一个socket.io文件,文件里面有个socket.io.js.我们可以通过script标签引入
+//	注意:socket.io依赖原生http协议,需要在项目中导入
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	npm install moduleName # 安装模块到项目目录下
+ 
+	npm install -g moduleName # -g 的意思是将模块安装到全局，具体安装到磁盘哪个位置，要看 npm config prefix 的位置。
+ 
+	npm install -save moduleName # -save 的意思是将模块安装到项目目录下，并在package文件的dependencies节点写入依赖。
+ 
+	npm install -save-dev moduleName # -save-dev 的意思是将模块安装到项目目录下，并在package文件的devDependencies节点写入依赖。
+	
+//	总结
+	devDependencies 节点下的模块是我们在开发时需要用的，比如项目中使用的 gulp ，压缩css、js的模块。这些模块在我们的项目部署后是不需要的，
+	所以我们可以使用 -save-dev 的形式安装。像 express 这些模块是项目运行必备的，应该安装在 dependencies 节点下，所以我们应该使用 -save 的形式安装。
+	
+
+
+
+
+
+
+
+
+
+//webpack --配置很繁琐
+概念:web开发的模块打包工具(js、css、img等打包成各种模块 然后引入模块)
+//优点
+1.分析项目结构  2.处理js的模块依赖关系  3.将浏览不能识别的语法如sass,less等打包成浏览器能识别的格式
+
+工作流程:
+1.把项目看做一个整体  --> 通过一个给定的一个主js文件(被称为入口文件) 从这个主文件就可以找到所有依赖的模块 使用loader来处理这些文件
+
+安装流程
+1.全局安装  npm i -g webpack  --> 选择安装版本 npm i -g webpack@版本号
