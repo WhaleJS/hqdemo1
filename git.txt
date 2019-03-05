@@ -258,18 +258,129 @@
 
 
 
+===========================================================
 
 
+webpack
+四个核心概念1.entry(入口) 2.output(出口) 3.loader(加载程序) 4.plugins(插件--webpack不能做的任务借助第三方插件来完成)
 
 
-
-//webpack --配置很繁琐
+//webpack --配置很繁琐  注重模块化开发   gulp注重流程化
 概念:web开发的模块打包工具(js、css、img等打包成各种模块 然后引入模块)
 //优点
-1.分析项目结构  2.处理js的模块依赖关系  3.将浏览不能识别的语法如sass,less等打包成浏览器能识别的格式
+1.分析项目结构   2.处理js的模块依赖关系  3.将浏览不能识别的语法如sass,less等打包成浏览器能识别的格式
 
 工作流程:
 1.把项目看做一个整体  --> 通过一个给定的一个主js文件(被称为入口文件) 从这个主文件就可以找到所有依赖的模块 使用loader来处理这些文件
 
 安装流程
 1.全局安装  npm i -g webpack  --> 选择安装版本 npm i -g webpack@版本号
+2.局部安装 npm i --save-dev webpack@版本号
+
+使用
+//js
+1.开始配置入口文件  entry -- 唯一的入口文件
+
+详细:创建一个webpack.config.js   module.exports = {entry:__dirname + '/文件名'}   __dirname是node.js的一个全局变量 代指当前脚本所在的全目录
+
+2.output{
+	path:__dirname + '文件目录name', //打包输出的文件目录名
+	filename:'bundle.js'  //打包输出的文件名
+	
+}
+
+3.运行webpack  输入webpack 运行webpack.config.js文件
+
+4.自动监听模块的变化然后自动打包 webpack -w
+
+5.当开发完后,把文件进行压缩打包(很少用)  webpack-p
+
+注意:
+devtool:'#cheap-module-eval-source-map'//生成source-map(资源地图)供浏览器阅读,把自己写的源文件分离展示
+详情:在浏览器左下角soucre里面生成一个webpack://文件(就是自己写的模块代码)
+==============================================================================
+
+
+css
+6.引入css 直接在主js文件里面 使用require('文件名.css') 注意css文件需要加后缀,且无需用变量保存,直接require('路径名')
+//详情:默认情况下webpack不支持css模块,需要引入插件  npm i --save-dev css-loader,并且要导入(在配置文件里面 配置)  
+module:{配置loader
+rules:[loader的详情配置
+test:'什么类型的文件',
+use:[{
+	loader:loader名称
+	}]
+}
+use:use可以为数组,因为处理一个模块,可能会用到多个模块
+module:用来配置loader  rules:loader的详情
+
+7.经过上述配置后,就可以使用css模块了,但是此时的css模块并没有插入到html中,因此,还要配置一个插件 style-loader
+注意:使用多个loader之后,loader的处理顺序是从右到左 --> use数组的从右到左
+总结:css处理过程:先用css-loader处理文件 再用style-loader插入  css文件打包到了bundle.js文件中
+
+==============================================================================
+
+图片  img png...的处理
+通过配置url-loade
+loader可配置参数  options{} 例如options:{limit}  limit:限制图片转base64的大小
+限制再次之前还要装file-loader
+
+=============================================================================
+插件 pubgins
+1.UglifyJsPlugin代码压缩 --webpack自带   生产环境使用
+	// 引入插件
+	var webpack = require('webpack');
+	// 压缩js
+	var UglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({sourceMap:true});	
+	{sourceMap:true}:是否生成sourceMap 
+	
+
+配置多入口  entry则为一个对象
+重点:
+2.CommonsChunkPlugin = new webpack.optimzie.CommonsChunkPlugin({name:'vendor'}) 打包文件  --生产环境使用
+
+entry:{
+	main:__dirname+'./main.js',这是应用入口
+	vendor:['jquery'] vendor是规定的,且后面是一个数组,这是另一个入口
+}
+vendor:公共模块
+
+
+3.	// 为webpack增加一个全局变量,删除所有的警告代码和无用代码 --用于生产环境
+			new webpack.DefinePlugin({
+				'process.env':{
+					NODE_ENV:JSON.stringfiy('production/development')
+				}
+			})
+	
+//网站
+掘金  css88  caniuse
+
+
+Vue
+
+1.vue组件也是vue的一个实例
+
+2.vue实例对象有一些特殊方法  可以加$前缀用以区分和其他对象或者变量
+
+3.watch监听  监听数据内容改变--触发回调
+vm.watch('a',function(newvalue,oldvalue){
+	这个回调在a值改变后调用
+})
+
+4.vue实例过程
+实例创建 --> 设置数据以及监听 --> 编译模板 --> 挂载到DOM --> 数据更新就更新DOM
+生命周期钩子函数  --> 开发者可以在不同阶段写入数据或者改变数据等等
+注意:不要在选项对象属性或者回调上使用箭头函数
+例如:created:function(){}  -->  代表实例创建后执行的函数
+
+
+开始
+vue.js基于html语法 属于模板编程  vue把模板编译成虚拟DOM
+1.数据绑定{{数据名}}  v-once指令可以使得数据不再变更
+2.v-html可以编译成html输出,HTML特性不要使用v-html,一般使用v-bind指令
+v-bind:html特性名--在新版本中支持v-bind:[元素属性名] 
+v-on也支持 v-on:[eventname] = '回调函数'
+
+
+修饰符:
