@@ -354,9 +354,36 @@ vendor:公共模块
 			})
 	
 //网站
-掘金  css88  caniuse
+掘金  css88  caniuse  http://www.ydcss.com/
+//======================================================
+rem适配网址
+https://www.cnblogs.com/huanghuali/p/8888608.html
+https://www.cnblogs.com/interdrp/p/9042749.html
 
 
+///////////////////////////////////////////////////////////////////////////////
+
+rem
+1rem默认jiushi8根元素字体大小
+html默认为16px(也是浏览器默认字体大小) 设置为62.5%则为10px 方便换算
+html 62.5% = 1rem = 10px
+弊端:浏览器默认字体大小不一样
+
+//移动端推荐方案
+Flexible.js精华  --> 1rem = 75px
+淘宝的Flexible.js用rem做适配  Flexible.js将视觉稿分成100份(为了更好的适配vh和vw单位).每一份为一个a  1rem = 10a  也就是 1rem = 10a 1rem = 75px 1a = 7.5px 
+引入CDN,不用设置移动端常用meta标签
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
 Vue
 
 1.vue组件也是vue的一个实例
@@ -382,5 +409,131 @@ vue.js基于html语法 属于模板编程  vue把模板编译成虚拟DOM
 v-bind:html特性名--在新版本中支持v-bind:[元素属性名] 
 v-on也支持 v-on:[eventname] = '回调函数'
 
+3.vue模板语法支持js表达式,但不支持流程控制语句和普通语句 例如var a = xx  if(){}  且表达式不可过长,否则模板过重不易于维护
 
-修饰符:
+4.修饰符:
+v-on:.xxx='函数名'
+v-on:submit.prevent="onSubmit
+
+5.指令的缩写(节约开发环境)
+v-bind --> :   v-on --> @
+
+
+6.计算属性 计算属性是基于它们的依赖进行缓存的(重点)
+//对于复杂的计算逻辑采用计算属性
+computed{}计算对象  computed中getter(读取值)setter(设置值),vue预设只有getter -- 读取值
+计算属性也是和数据互通的,会随变化而变化,除了使用计算属性以外,在methods对象中对象中定义方法也是可以的
+
+7.侦听属性 watch:{}
+一些数据随其他数据变动而变动,可用监听器,但使用计算属性要好很多
+
+8.侦听器 -- 当数据变化,开销过大,且有异步回调,最好使用侦听器
+
+
+9.class
+//class的绑定
+通过v-bind绑定  示例 --> 绑定一个class对象 v-bind:class="{box1:xxx}"box1为类名,xxx为变量名(以布尔值为值,表示是否使用该类名)
+可以绑定多个类名v-bind:class="{box1:xxx1,box2:xxx2.................}"
+附注:可以将v-bind:class='对象名' 然后在vue实例的data对象里面,用绑定的class对象名来抒写类名,以便于更好的控制
+v-bind:class还可为数组,数组里面可以写三元表达式,还可写对象与法
+
+
+10.样式style的绑定
+
+<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+附注:color、fontSize是css属性名,activeColor也是属性名,不过activeColor在data中是color的值 data:{activeColor:'red'}
+
+v-show:控制元素的显隐,使用v-show的元素会始终留在DOM结构中
+
+11.列表渲染
+v-for(i, index),可以添加参数,如index  遍历对象的时候,还可以写入参数key,完整的遍历键盘值
+
+//5 6 7 8 9 10 11 1 2 3
+
+========================
+解VUE
+MVVM
+model(控制器) <-- viewmodel --> view(视图)
+console.log(vue) --> 得到一个构造函数  function vue(options){}  因此可以用new vue({创建一个实例})
+指令:
+v-bind -- 绑定
+v-once -- 只会绑定一次,过后就断开联系
+v-model --数据双向绑定  视图变数据变  数据变视图变  (数据双向绑定的实现原理-->object.defineProperty)
+v-if -- 条件判断以及元素的显示隐藏 但是if的true-false的布尔值是控制元素的none和block 比较消耗浏览器性能
+v-on -- 绑定事件 v-on:事件名
+点 .  - 修饰符 修饰符可以同时用两个  例如 --> v-model.number.lazy='数据名'
+
+vue的实例属性和方法都有内置的$前缀,方便区分 
+示例:var vm = new Vue({el:"#app"}) vm.$el = Jquery-->$('#app')
+
+附注:
+object.defineProperty -- 本意,定义一个对象的属性.但是object.defineProperty对对象的监控很全面
+
+计算属性
+computed:{
+	
+}
+
+组件:
+//可以重复使用的vue的实例  因此他们拥有同vue实例一样的选项属性 如data computed watch 等 ,单唯独el:根元素是组件实例没有的
+ 
+
+全局组件
+
+局部组件
+
+1.组件定义方式
+短横线方式或者驼峰命名  
+若采用驼峰式,那么使用组件的时候,需要用断号连接<my-com></my-com>
+
+//全局注册
+Vue.component('组件名',{template:"<></>"})
+全剧组件注册必须在vue实例之前注册
+
+//局部注册
+1.var 组件名 = {template:"<p></p>"}
+2.在vue实例中定义组件对象  components:{组件名:定义的局部组件名}
+
+//全局组件在全部实例中都能用
+//局部组件只能在定义了的实例中才能使用
+
+
+[重点]
+2.组件放数据
+component('com',{
+	template:"<h1>Hello{{a}}</h1>",
+	data:{
+		 a:"哈哈"
+	}
+})
+//上面这种方式放数据会报错,因为组件可以复用,当一个组件数据改变了,其余的都会改变
+
+
+//正确方式,把data改为函数,返回一个对象,对象里面包含数据    data:{}改为  data:function(){return{a:"哈哈"}}
+component('com',{
+	template:"<h1>Hello{{a}}</h1>",
+	data:function(){
+		 return {a:"哈哈"}
+	}
+})
+
+组件里面的data同vue实例的data不同,组件里面的data必须返回一个独立的对象,但是,组件的复用还是会造成数据相同,此时在组件里面加上一个props去定义组件的属性,实现复用组件的数据不同,这也是
+[父组件向子组件传值],通过props去传递(但是,在子组件里面需要定义一个属性--同父组件中的props的属相相同)  示例->
+component('com',
+		 {template:"<div></div>",
+		 props:['C'],
+		  data(){
+		  	return {a:"哈哈"}
+		  }
+})
+
+
+
+组件总结:
+1.概念--组件是可以重复使用的vue的实例 ,分为全局,局部注册的组件
+2.特性--拥有同vue实例一样的选项属性 如data computed watch 等 ,单唯独el:根元素是组件实例没有的
+3.独立--组件中的data必须是一个函数,而不是vue实例中data时一个对象,只是通过data函数返回一个对象,因此便可为每个组件返回一个独立的对象拷贝
+4.命名--组件命名 1.驼峰 此方法命名组件,在组件使用的时候只能是小写并且加短横线隔开 2.短横线命名,可直接使用
+5.全局--全局注册的组件,可在任意new Vue实例中使用,也可在子组件中使用
+6.局部--局部组件,放置在一个vue实例中的组件对象components:{}中,在外通过 var 组件名 = {template}注册,局部组件若想相互嵌套,则必须在定义时,在内部建立一个components对象用于放置嵌套的组件
+7.props--实现父组件向子组件传值.可以为数组或可为对象,可以为其设定指定数据类型,可动态绑定/静态绑定
