@@ -359,6 +359,8 @@ vendor:公共模块
 rem适配网址
 https://www.cnblogs.com/huanghuali/p/8888608.html
 https://www.cnblogs.com/interdrp/p/9042749.html
+//js教程
+http://javascript.ruanyifeng.com/
 
 
 ///////////////////////////////////////////////////////////////////////////////
