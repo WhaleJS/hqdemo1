@@ -360,10 +360,21 @@ rem适配网址
 https://www.cnblogs.com/huanghuali/p/8888608.html
 https://www.cnblogs.com/interdrp/p/9042749.html
 //js教程
-http://javascript.ruanyifeng.com/
+https://wangdoc.com/javascript/
 //跨域请求
 https://www.cnblogs.com/chiangchou/p/jsonp.html
 
+layUI独立组件
+https://www.layui.com/alone.html
+
+//layUI弹框组件
+https://www.layui.com/doc/modules/layer.html
+
+//模块化区别和规范
+https://blog.csdn.net/m0_38134431/article/details/8378942
+
+//移动端手势库
+http://bh-lay.github.io/toucher/
 
 ///////////////////////////////////////////////////////////////////////////////
 
