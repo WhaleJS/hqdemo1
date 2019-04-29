@@ -376,6 +376,16 @@ https://blog.csdn.net/m0_38134431/article/details/8378942
 //移动端手势库
 http://bh-lay.github.io/toucher/
 
+//垂直居中
+https://www.cnblogs.com/hutuzhu/p/4450850.html
+
+//web储存
+https://blog.csdn.net/ibobobo/article/details/79402753
+https://blog.csdn.net/u013129606/article/details/81351163
+
+//遍历轮播
+https://blog.csdn.net/weixin_41760500/article/details/82965087
+
 ///////////////////////////////////////////////////////////////////////////////
 
 rem
